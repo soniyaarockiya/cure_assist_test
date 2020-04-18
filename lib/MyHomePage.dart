@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'Service/AuthServicePage.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -8,15 +9,35 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final formKey = new GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   AuthServicePage _auth = BaseAuth();
 
   String name;
   String age;
   String weight;
+  String phoneNumber;
+
+  //Current user sign out
+  void logOutUser() async {
+    //This will take us back to the authentication  screen
+    Navigator.pop(context);
+    await _auth.signOut();
+  }
+
+  //First validate form entries and then save the data  against the user collection in fireStore
+  void checkFormAndSubmit() async {
+    if (_auth.validateAndSave(formKey)) {
+      await _auth.saveInDataBase(name, age, weight, phoneNumber);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    //Retrieve arguments (Current user phone number from authentication screen) passed through named routes
+    var phoneNumberFromAuthRoute = ModalRoute
+        .of(context)
+        .settings
+        .arguments;
+    phoneNumber = phoneNumberFromAuthRoute;
     return Scaffold(
       appBar: AppBar(
         title: Text("Home"),
@@ -59,6 +80,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 RaisedButton(
                   onPressed: checkFormAndSubmit,
                   child: Text('Submit'),
+                ),
+                RaisedButton(
+                  //Verify phoneNumber
+                  onPressed: logOutUser,
+                  child: Text('SignOut'),
                 )
               ],
             ),
@@ -66,11 +92,5 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
-  }
-
-  void checkFormAndSubmit() async {
-    if (_auth.validateAndSave(formKey)) {
-      var result = await _auth.saveInDataBase(name, age, weight);
-    }
   }
 }

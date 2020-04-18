@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'Service/AuthServicePage.dart';
+
 class AuthenticationPage extends StatefulWidget {
   @override
   _AuthenticationPageState createState() => _AuthenticationPageState();
@@ -7,10 +9,18 @@ class AuthenticationPage extends StatefulWidget {
 
 class _AuthenticationPageState extends State<AuthenticationPage> {
   final formKey = new GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  AuthServicePage _auth = BaseAuth();
+  String phoneNumber;
+  bool finalResult = false;
 
-  String email;
-  String password;
+  // This will first validate the form, and then authenticate the user phone number
+  Future<void> logInUser() async {
+    if (_auth.validateAndSave(formKey)) {
+      await _auth.verifyPhone(phoneNumber, context);
+      //Clear form
+      formKey.currentState.reset();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,24 +36,16 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
           children: <Widget>[
             TextFormField(
               decoration: InputDecoration(
-                hintText: "Email",
+                hintText: "Enter Phone number",
               ),
               validator: (value) =>
-              value.isEmpty ? 'Email cant be empty' : null,
-              onSaved: (value) => email = value,
-            ),
-            TextFormField(
-              obscureText: true,
-              decoration: InputDecoration(
-                hintText: "Password",
-              ),
-              validator: (value) =>
-              value.isEmpty ? 'Password cant be empty' : null,
-              onSaved: (value) => password = value,
+              value.isEmpty ? 'Mobile number cant be empty' : null,
+              onSaved: (value) => phoneNumber = value,
             ),
             RaisedButton(
-              onPressed: () {},
-              child: Text('Submit'),
+              //Verify phoneNumber
+              onPressed: logInUser,
+              child: Text('SignIn'),
             )
           ],
         ),

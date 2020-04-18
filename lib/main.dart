@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'AuthenticationPage.dart';
 import 'MyHomePage.dart';
 
 void main() {
@@ -16,7 +18,14 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+
+      initialRoute: '/',
+      routes: {
+        '/': (context) => AuthenticationPage(),
+        'MyHomePage': (context) => MyHomePage(),
+
+      },
+//      home: MyHomePage(),
     );
   }
 }
