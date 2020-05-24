@@ -47,50 +47,59 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(30.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                TextFormField(
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    hintText: "Name",
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TextFormField(
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      hintText: "Name",
+                    ),
+                    validator: (value) =>
+                    value.isEmpty ? 'Please enter the name' : null,
+                    onSaved: (value) => name = value,
                   ),
-                  validator: (value) =>
-                  value.isEmpty ? 'Please enter the name' : null,
-                  onSaved: (value) => name = value,
-                ),
-                TextFormField(
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    hintText: "Age",
+                  TextFormField(
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      hintText: "Age",
+                    ),
+                    validator: (value) =>
+                    value.isEmpty ? 'Please enter your age' : null,
+                    onSaved: (value) => age = value,
                   ),
-                  validator: (value) =>
-                  value.isEmpty ? 'Please enter your age' : null,
-                  onSaved: (value) => age = value,
-                ),
-                TextFormField(
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    hintText: "Weight",
+                  TextFormField(
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      hintText: "Weight",
+                    ),
+                    validator: (value) =>
+                    value.isEmpty ? 'Please enter your weight' : null,
+                    onSaved: (value) => weight = value,
                   ),
-                  validator: (value) =>
-                  value.isEmpty ? 'Please enter your weight' : null,
-                  onSaved: (value) => weight = value,
-                ),
-                RaisedButton(
-                  onPressed: checkFormAndSubmit,
-                  child: Text('Submit'),
-                ),
-                RaisedButton(
-                  //Verify phoneNumber
-                  onPressed: logOutUser,
-                  child: Text('SignOut'),
-                )
-              ],
+                  RaisedButton(
+                    onPressed: checkFormAndSubmit,
+                    child: Text('Submit'),
+                  ),
+                  RaisedButton(
+                    //Verify phoneNumber
+                    onPressed: () {
+                      //Move to Covid data page
+                      Navigator.of(context).pushNamed("CovidDataPage");
+                    },
+                    child: Text('Covid Data'),
+                  )
+
+
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
   }
+
+
 }

@@ -66,12 +66,14 @@ class BaseAuth implements AuthServicePage {
     try {
       String currentTime = Timestamp.now().toString();
       await Firestore.instance
-          .collection(phoneNumber.toString())
-          .document(currentTime)
-          .setData({'name': name, 'age': age, 'weight': weight});
+          .collection("User Collection")
+          .document(phoneNumber.toString())
+          .collection(currentTime.toString())
+          .add({'name': name, 'age': age, 'weight': weight});
+//          .setData({'name': name, 'age': age, 'weight': weight});
 
       print(
-          "Data uploaded sucessfully...........................................");
+          "Data uploaded successfully...........................................");
     } catch (e) {
       print(
           "Something wrong while trying to save data in db ......................" +

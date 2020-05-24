@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'AuthenticationPage.dart';
 import 'MyHomePage.dart';
+import 'CovidDataPage.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,11 +19,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
 
-      initialRoute: '/',
+      initialRoute: 'CovidDataPage',
       routes: {
         '/': (context) => AuthenticationPage(),
         'MyHomePage': (context) => MyHomePage(),
-
+        'CovidDataPage': (context) => CovidPage(),
       },
 //      home: MyHomePage(),
     );

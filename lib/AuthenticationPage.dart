@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'Service/AuthServicePage.dart';
 
 class AuthenticationPage extends StatefulWidget {
@@ -46,7 +45,8 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               //Verify phoneNumber
               onPressed: logInUser,
               child: Text('SignIn'),
-            )
+            ),
+
           ],
         ),
       ),
